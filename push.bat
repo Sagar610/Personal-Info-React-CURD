@@ -9,12 +9,12 @@ if errorlevel 1 (
     git init
 )
 
-REM Check if a remote exists
+REM Check if a remote exists https://github.com/Sagar610/Personal-Info-React-CURD.git
 git remote get-url origin >nul 2>&1
 if errorlevel 1 (
     echo No remote repository found.
     set /p remoteUrl=Enter the remote repository URL:https://github.com/Sagar610/Personal-Info-React-CURD.git
-    git remote add origin %remoteUrl%
+    git remote add %remoteUrl%
 )
 
 REM Stage all changes
