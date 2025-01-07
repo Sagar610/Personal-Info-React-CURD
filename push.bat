@@ -9,12 +9,18 @@ if errorlevel 1 (
     git init
 )
 
-REM Check if a remote exists https://github.com/Sagar610/Personal-Info-React-CURD.git
+REM Check if a remote exists
 git remote get-url origin >nul 2>&1
 if errorlevel 1 (
     echo No remote repository found.
-    set /p remoteUrl=Enter the remote repository URL:https://github.com/Sagar610/Personal-Info-React-CURD.git
-    git remote add %remoteUrl%
+    set /p remoteUrl=Enter the remote repository URL: 
+    git remote add origin %remoteUrl%
+)
+
+REM Check if the current branch is 'main', otherwise, rename it
+for /f "delims=" %%i in ('git rev-parse --abbrev-ref HEAD') do set branch=%%i
+if /i "%branch%"=="master" (
+    git branch -m master main
 )
 
 REM Stage all changes
@@ -23,11 +29,11 @@ git add .
 REM Commit changes with a default message
 echo Enter commit message:
 if "%commitMsg%"=="" set commitMsg=Auto commit: %date% %time%
-set /p commitMsg=
+set /p commitMsg= 
 git commit -m "%commitMsg%"
 
 REM Push changes to the remote repository
-git push origin main
+git push -u origin main
 
 REM Confirmation message
 echo Changes pushed to GitHub successfully!
